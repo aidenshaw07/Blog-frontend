@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import NavBar from "./NavBar";
-import "./Home.css";
+import NavBar from "../NavBar/NavBar";
+import "./home.scss";
 
 const Login = ({ userData, setUserData, getData }) => {
   const location = useLocation();
@@ -23,7 +23,7 @@ const Login = ({ userData, setUserData, getData }) => {
 
   const renderData = userData.map((item) => {
     return (
-      <div className="data" key={item.id}>
+      <div key={item.id}>
         <h1>{item.firstName}</h1>
         <h2>{item.lastName}</h2>
         <button onClick={() => deleteUser(item.id)}>Delete</button>
@@ -46,15 +46,14 @@ const Login = ({ userData, setUserData, getData }) => {
   }, []);
 
   return (
-    <div>
-      <h1>Home</h1>
-      <div>{renderData}</div>
-      <nav>
-        {location.pathname === "/" ? null : <NavBar /> &&
-          location.pathname === "/sign-up" ? null : (
-          <NavBar />
-        )}
-      </nav>
+    <div className="data">
+        <nav>
+          {location.pathname === "/" ? null : <NavBar /> &&
+            location.pathname === "/sign-up" ? null : (
+            <NavBar />
+          )}
+        </nav>
+        <div>{renderData}</div>
     </div>
   );
 };

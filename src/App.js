@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import axios from "axios";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import SignUp from "./components/SignUp";
+import Home from "./components/Home/Home";
+import Login from "./components/Login/Login";
+import SignUp from "./components/SignUp/SignUp";
+import Profile from "./components/Profile/Profile";
 
 const App = () => {
   const [token, setToken] = useState([]);
@@ -45,6 +46,7 @@ const App = () => {
           }
         />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
