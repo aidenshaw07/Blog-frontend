@@ -1,61 +1,72 @@
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-import NavBar from "../NavBar/NavBar";
 import "./home.scss";
+import BlogPage from "../BlogPage/BlogPage";
+import Landing from "../Landing/Landing";
 
-const Login = ({ userData, setUserData, getData }) => {
-  const location = useLocation();
+const Home = () => {
+  const { user, isAuthenticated } = useAuth0();
+  const [userId, setUserId] = useState("");
+  const {
+    given_name = "First Name",
+    family_name = "Last Name",
+    nickname = "Nickname",
+    picture,
+    email,
+  } = user || {};
+  const [userEmail, setUserEmail] = useState([]);
 
-  const deleteUser = (id) => {
-    axios.delete(`http://localhost:8000/users/${id}/`).then((response) => {
-      getData();
-      console.log(response.data);
-    });
+  const requestBody = {
+    firstName: given_name,
+    lastName: family_name,
+    userId: nickname,
+    email: email,
+    photo_url: picture,
+    password: "test",
   };
 
-  const deletePost = (id) => {
-    axios.delete(`http://localhost:8000/post/${id}/`).then((response) => {
-      getData();
-      console.log(response.data);
+  const getData = async () => {
+    const response = await axios.get("http://localhost:8000/users");
+    const data = await response.data;
+    const userEmail = data.map((item) => {
+      return item.email;
     });
-  };
+    setUserEmail(userEmail);
 
-  const renderData = userData.map((item) => {
-    return (
-      <div key={item.id}>
-        <h1>{item.firstName}</h1>
-        <h2>{item.lastName}</h2>
-        <button onClick={() => deleteUser(item.id)}>Delete</button>
-        <h4>
-          {item.posts.map((post) => {
-            return (
-              <div key={post.id}>
-                <h4>{post.content}</h4>
-                <button onClick={() => deletePost(post.id)}>DeletePost</button>
-              </div>
-            );
-          })}
-        </h4>
-      </div>
-    );
-  });
+    const matchedEmail = userEmail.filter((item) => {
+      return item == requestBody.email;
+    });
+
+    if (requestBody.email === matchedEmail[0]) {
+      console.log("Successful Login");
+    } else {
+      const response = await axios.post(
+        "http://localhost:8000/users",
+        requestBody
+      );
+      const data = await response.data;
+      // console.log(data);
+    }
+    const loggedInUser = data.filter((user) => {
+      return user.email === requestBody.email;
+    });
+    // console.log(loggedInUser[0].id);
+    setUserId(loggedInUser[0].id);
+  };
 
   useEffect(() => {
+    // console.log(isAuthenticated);
     getData();
-  }, []);
+  }, [email]);
+
+  if (!isAuthenticated) return <Landing />;
 
   return (
-    <div className="data">
-        <nav>
-          {location.pathname === "/" ? null : <NavBar /> &&
-            location.pathname === "/sign-up" ? null : (
-            <NavBar />
-          )}
-        </nav>
-        <div>{renderData}</div>
+    <div>
+      <BlogPage userId={userId} />
     </div>
   );
 };
 
-export default Login;
+export default Home;
