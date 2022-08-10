@@ -1,31 +1,37 @@
 import React, { useState } from "react";
-import axios from "axios";
-import "./navBar.scss";
-import { useAuth0 } from "@auth0/auth0-react";
-import { createPost } from "../../shared/actions";
+import "./blogPage.scss";
+import { deletePost, updatePost } from "../../shared/actions";
 import { toggleModal } from "../../shared/onClickFunctions";
 
-const NavBar = ({ userId, getData }) => {
-  const { logout } = useAuth0();
-  const [createContent, setCreateContent] = useState("");
+const Blog = ({ firstName, lastName, post, axios, getData, userId }) => {
+  const [postContent, setPostContent] = useState("");
   const [modal, setModal] = useState(false);
-
   if (modal) {
     document.body.classList.add("active-modal");
   } else {
     document.body.classList.remove("active-modal");
   }
-
   return (
-    <div className="sidenav">
-      <a href="http://localhost:3000/">Home</a>
-      {/* <a href="">Profile</a> */}
-      <a href="#" onClick={() => toggleModal(modal, setModal)}>
-        Create Post
-      </a>
-      <a href="#" onClick={logout}>
-        Sign Out
-      </a>
+    <div className="userdata">
+      <div className="content">
+        <h4 className="user-name">
+          {firstName} {lastName}
+        </h4>
+        <p className="posted-content">{post.content}</p>
+        <button
+          className="action-button"
+          onClick={() => toggleModal(modal, setModal)}
+        >
+          Update
+        </button>
+        <button
+          hidden={userId === 2 ? false : true}
+          className="action-button"
+          onClick={() => deletePost(post.id, axios, getData)}
+        >
+          DeletePost
+        </button>
+      </div>
       {modal && (
         <div className="modal">
           <div
@@ -37,23 +43,24 @@ const NavBar = ({ userId, getData }) => {
               className="create-post-input"
               type="text"
               placeholder="Type your post here"
-              value={createContent}
+              value={postContent}
               onChange={(e) => {
-                setCreateContent(e.target.value);
+                setPostContent(e.target.value);
               }}
             />
             <button
               onClick={() =>
-                createPost(
-                  createContent,
+                updatePost(
+                  post.id,
                   userId,
                   axios,
                   getData,
-                  setCreateContent
+                  postContent,
+                  setPostContent
                 )
               }
             >
-              Create Post
+              Update Post
             </button>
             <button
               className="close-modal"
@@ -68,4 +75,4 @@ const NavBar = ({ userId, getData }) => {
   );
 };
 
-export default NavBar;
+export default Blog;

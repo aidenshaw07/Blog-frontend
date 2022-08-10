@@ -4,6 +4,7 @@ import axios from "axios";
 import "./home.scss";
 import BlogPage from "../BlogPage/BlogPage";
 import Landing from "../Landing/Landing";
+import NavBar from "../NavBar/NavBar";
 
 const Home = () => {
   const { user, isAuthenticated } = useAuth0();
@@ -16,6 +17,15 @@ const Home = () => {
     email,
   } = user || {};
   const [userEmail, setUserEmail] = useState([]);
+  const [userData, setUserData] = useState([]);
+
+  const getData = async () => {
+    const response = await axios.get("http://localhost:8000/users");
+    const data = await response.data;
+    setUserData(data);
+  };
+
+  let updatedAuthenticated = isAuthenticated;
 
   const requestBody = {
     firstName: given_name,
@@ -26,46 +36,56 @@ const Home = () => {
     password: "test",
   };
 
-  const getData = async () => {
-    const response = await axios.get("http://localhost:8000/users");
-    const data = await response.data;
-    const userEmail = data.map((item) => {
-      return item.email;
-    });
-    setUserEmail(userEmail);
-
-    const matchedEmail = userEmail.filter((item) => {
-      return item == requestBody.email;
-    });
-
-    if (requestBody.email === matchedEmail[0]) {
-      console.log("Successful Login");
-    } else {
-      const response = await axios.post(
-        "http://localhost:8000/users",
-        requestBody
-      );
+  const checkAuthentication = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/users");
       const data = await response.data;
-      // console.log(data);
+      const userEmail = data.map((item) => {
+        return item.email;
+      });
+      setUserEmail(userEmail);
+
+      const matchedEmail = userEmail.filter((item) => {
+        return item == requestBody.email;
+      });
+
+      if (requestBody.email === matchedEmail[0]) {
+        // console.log("Successful Login");
+      } else {
+        const response = await axios.post(
+          "http://localhost:8000/users",
+          requestBody
+        );
+        const data = await response.data;
+        // console.log(data);
+      }
+      const loggedInUser = data.filter((user) => {
+        return user.email === requestBody.email;
+      });
+      // console.log(loggedInUser[0].id);
+      setUserId(loggedInUser[0]?.id);
+    } catch {
+      console.log("error");
     }
-    const loggedInUser = data.filter((user) => {
-      return user.email === requestBody.email;
-    });
-    // console.log(loggedInUser[0].id);
-    setUserId(loggedInUser[0].id);
   };
 
   useEffect(() => {
     // console.log(isAuthenticated);
-    getData();
+    checkAuthentication();
   }, [email]);
 
-  if (!isAuthenticated) return <Landing />;
+  if (!updatedAuthenticated) return <Landing />;
 
   return (
-    <div>
-      <BlogPage userId={userId} />
-    </div>
+    <>
+      <NavBar getData={getData} userId={userId} userData={userData} />
+      <BlogPage
+        userId={userId}
+        userData={userData}
+        setUserData={setUserData}
+        getData={getData}
+      />
+    </>
   );
 };
 

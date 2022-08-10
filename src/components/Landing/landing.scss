@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap");
 
 body {
@@ -11,28 +11,18 @@ body {
   background-attachment: fixed;
 }
 
-.button {
-  // border: 3px solid white;
-  // color: white;
-  // text-align: center;
-  // padding: 1rem;
-  // font-size: 1rem;
-  // cursor: pointer;
-}
-
 .word {
   font-size: 2rem;
   color: white;
-  font-family: "Roboto", sans-serif;
   font-weight: bold;
   // border: solid 5px pink;
-  font-family: "Dancing Script", cursive;
+  font-family: 'Shadows Into Light', cursive;
 }
 
 .designer {
   color: white;
   position: absolute;
-  left: 50%;
+  left: 90%;
   bottom: 0px;
   transform: translate(-50%, -50%);
   margin: 0 auto;
