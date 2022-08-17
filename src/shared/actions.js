@@ -4,20 +4,33 @@ export const updatePost = (id, userId, axios, getData, postContent, setPostConte
     user_id: userId,
   };
   axios
-    .put(`http://localhost:8000/users/${userId}/posts/${id}/`, updateData)
+    .put(`https://aidenshaw-blogpage.herokuapp.com/users/${userId}/posts/${id}/`, updateData)
     .then((response) => {
       getData();
       setPostContent("");
-      console.log(id)
-      console.log(response.data);
+      // console.log(response.data);
     });
 };
 
-export const deletePost = (id, axios, getData) => {
-  axios.delete(`http://localhost:8000/posts/${id}/`).then((response) => {
+export const updateUserName = (userId, newFirstName, newLastName, setNewFirstName, setNewLastName, axios, getData) => {
+  const updateNames = {
+    firstName: newFirstName,
+    lastName: newLastName,
+  };
+  axios.put(`https://aidenshaw-blogpage.herokuapp.com/users/${userId}/`, updateNames).then((response) => {
     getData();
-    console.log(id)
+    setNewFirstName("");
+    setNewLastName("");
     console.log(response.data);
+    console.log("Hello");
+  });
+}
+
+
+export const deletePost = (id, axios, getData) => {
+  axios.delete(`https://aidenshaw-blogpage.herokuapp.com/posts/${id}/`).then((response) => {
+    getData();
+    // console.log(response.data);
   });
 };
 
@@ -26,13 +39,13 @@ export const createPost = (createContent, userId, axios, getData, setCreateConte
     content: createContent,
     user_id: userId,
   };
-  console.log(data);
+  // console.log(data);
   axios
-    .post(`http://localhost:8000/posts/`, data)
+    .post(`https://aidenshaw-blogpage.herokuapp.com/users/${userId}/posts/`, data)
     .then((response) => {
       getData();
       setCreateContent("");
-      console.log(response.data);
+      // console.log(response.data);
     })
     .catch((error) => {
       console.log(error.message);

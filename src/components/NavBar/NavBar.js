@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { createPost } from "../../shared/actions";
 import { toggleModal } from "../../shared/onClickFunctions";
 
-const NavBar = ({ userId, getData }) => {
+const NavBar = ({ userId, getData, userData }) => {
   const { logout } = useAuth0();
   const [createContent, setCreateContent] = useState("");
   const [modal, setModal] = useState(false);
@@ -15,6 +15,16 @@ const NavBar = ({ userId, getData }) => {
   } else {
     document.body.classList.remove("active-modal");
   }
+
+  const navBarData = userData.filter((item) => {
+    if (item.id === userId) {
+      return (
+        <div className="userdata" key={item.id}>
+          {item.firstName} {item.lastName}
+        </div>
+      );
+    }
+  });
 
   return (
     <div className="sidenav">
@@ -26,6 +36,14 @@ const NavBar = ({ userId, getData }) => {
       <a href="#" onClick={logout}>
         Sign Out
       </a>
+      <div className="navBarData">
+        <div >
+          <img className="navBarDataImage" src={navBarData[0]?.photo_url} alt="profile" />
+        </div>
+        <div>
+          {navBarData[0]?.firstName} {navBarData[0]?.lastName}
+        </div>
+      </div>
       {modal && (
         <div className="modal">
           <div

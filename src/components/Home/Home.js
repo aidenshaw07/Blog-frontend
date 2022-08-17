@@ -5,6 +5,7 @@ import "./home.scss";
 import BlogPage from "../BlogPage/BlogPage";
 import Landing from "../Landing/Landing";
 import NavBar from "../NavBar/NavBar";
+import Profile from "../Profile/Profile";
 
 const Home = () => {
   const { user, isAuthenticated } = useAuth0();
@@ -18,9 +19,12 @@ const Home = () => {
   } = user || {};
   const [userEmail, setUserEmail] = useState([]);
   const [userData, setUserData] = useState([]);
-
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const getData = async () => {
-    const response = await axios.get("http://localhost:8000/users");
+    const response = await axios.get(
+      "https://aidenshaw-blogpage.herokuapp.com/users/"
+    );
     const data = await response.data;
     setUserData(data);
   };
@@ -38,7 +42,9 @@ const Home = () => {
 
   const checkAuthentication = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/users");
+      const response = await axios.get(
+        "https://aidenshaw-blogpage.herokuapp.com/users/"
+      );
       const data = await response.data;
       const userEmail = data.map((item) => {
         return item.email;
@@ -53,28 +59,42 @@ const Home = () => {
         // console.log("Successful Login");
       } else {
         const response = await axios.post(
-          "http://localhost:8000/users",
+          "https://aidenshaw-blogpage.herokuapp.com/users/",
           requestBody
         );
         const data = await response.data;
-        // console.log(data);
+        console.log(data);
       }
       const loggedInUser = data.filter((user) => {
         return user.email === requestBody.email;
       });
       // console.log(loggedInUser[0].id);
       setUserId(loggedInUser[0]?.id);
+      setFirstName(loggedInUser[0]?.firstName);
+      setLastName(loggedInUser[0]?.lastName);
     } catch {
       console.log("error");
     }
   };
+  console.log(userData);
 
   useEffect(() => {
     // console.log(isAuthenticated);
     checkAuthentication();
   }, [email]);
 
+  const navBarData = userData.filter((item) => {
+    if (item.id === userId) {
+      return (
+        <div className="userdata" key={item.id}>
+          {item.firstName} {item.lastName}
+        </div>
+      );
+    }
+  });
+
   if (!updatedAuthenticated) return <Landing />;
+  if (updatedAuthenticated && navBarData[0]?.firstName === "First Name" && navBarData[0]?.lastName === "Last Name") return <Profile userId={userId} setFirstName={setFirstName} setLastName={setLastName}/>;
 
   return (
     <>

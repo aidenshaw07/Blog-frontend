@@ -11,6 +11,11 @@ const Blog = ({ firstName, lastName, post, axios, getData, userId }) => {
   } else {
     document.body.classList.remove("active-modal");
   }
+
+  // if (firstName === "First Name" && lastName === "Last Name") {
+  //   return <input type="text" placeholder="Name and Last Name" />;
+  // }
+
   return (
     <div className="userdata">
       <div className="content">
@@ -18,19 +23,22 @@ const Blog = ({ firstName, lastName, post, axios, getData, userId }) => {
           {firstName} {lastName}
         </h4>
         <p className="posted-content">{post.content}</p>
-        <button
-          className="action-button"
-          onClick={() => toggleModal(modal, setModal)}
-        >
-          Update
-        </button>
-        <button
-          hidden={userId === 2 ? false : true}
-          className="action-button"
-          onClick={() => deletePost(post.id, axios, getData)}
-        >
-          DeletePost
-        </button>
+        <div className="button-container">
+          <button
+            hidden={userId === post.user ? false : true}
+            className="action-button"
+            onClick={() => toggleModal(modal, setModal)}
+          >
+            Update
+          </button>
+          <button
+            hidden={userId === post.user ? false : true}
+            className="action-button"
+            onClick={() => deletePost(post.id, axios, getData)}
+          >
+            DeletePost
+          </button>
+        </div>
       </div>
       {modal && (
         <div className="modal">
