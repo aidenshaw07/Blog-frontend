@@ -3,7 +3,7 @@ import { toggleModal } from "../../shared/onClickFunctions";
 import { updateUserName } from "../../shared/actions";
 import axios from "axios";
 
-const Profile = ({ userId }) => {
+const Profile = ({ userId, getData }) => {
   const [modal, setModal] = useState(true);
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
@@ -37,7 +37,8 @@ const Profile = ({ userId }) => {
                   newLastName,
                   setNewFirstName,
                   setNewLastName,
-                  axios
+                  axios,
+                  getData
                 );
               }}
             >

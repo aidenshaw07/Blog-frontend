@@ -94,7 +94,7 @@ const Home = () => {
   });
 
   if (!updatedAuthenticated) return <Landing />;
-  if (updatedAuthenticated && navBarData[0]?.firstName === "First Name" && navBarData[0]?.lastName === "Last Name") return <Profile userId={userId} setFirstName={setFirstName} setLastName={setLastName}/>;
+  if (updatedAuthenticated && navBarData[0]?.firstName === "First Name" && navBarData[0]?.lastName === "Last Name") return <Profile userId={userId} getData={getData} setFirstName={setFirstName} setLastName={setLastName}/>;
 
   return (
     <>

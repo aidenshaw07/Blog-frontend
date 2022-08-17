@@ -16,14 +16,19 @@ export const updateUserName = (userId, newFirstName, newLastName, setNewFirstNam
   const updateNames = {
     firstName: newFirstName,
     lastName: newLastName,
+    userId: userId,
+    password: "test",
+    email: "tansu.soydan@hotmail.com",
+    photo_url: "test",
   };
   axios.put(`https://aidenshaw-blogpage.herokuapp.com/users/${userId}/`, updateNames).then((response) => {
     getData();
     setNewFirstName("");
     setNewLastName("");
     console.log(response.data);
-    console.log("Hello");
-  });
+  }).catch((error) => {
+    console.log(error.request);
+  })
 }
 
 
