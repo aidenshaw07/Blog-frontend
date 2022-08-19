@@ -10,6 +10,8 @@ import Profile from "../Profile/Profile";
 const Home = () => {
   const { user, isAuthenticated } = useAuth0();
   const [userId, setUserId] = useState("");
+  const [loggedInUserEmail, setLoggedInUserEmail] = useState("");
+  console.log(loggedInUserEmail);
   const {
     given_name = "First Name",
     family_name = "Last Name",
@@ -28,7 +30,9 @@ const Home = () => {
     const data = await response.data;
     setUserData(data);
   };
-
+  console.log(userEmail);
+  console.log(firstName);
+  console.log(lastName);
   let updatedAuthenticated = isAuthenticated;
 
   const requestBody = {
@@ -52,7 +56,7 @@ const Home = () => {
       setUserEmail(userEmail);
 
       const matchedEmail = userEmail.filter((item) => {
-        return item == requestBody.email;
+        return item === requestBody.email;
       });
 
       if (requestBody.email === matchedEmail[0]) {
@@ -62,14 +66,15 @@ const Home = () => {
           "https://aidenshaw-blogpage.herokuapp.com/users/",
           requestBody
         );
-        const data = await response.data;
+        const data = response.data;
         console.log(data);
+        // userData.push(data);
       }
       const loggedInUser = data.filter((user) => {
         return user.email === requestBody.email;
       });
-      // console.log(loggedInUser[0].id);
       setUserId(loggedInUser[0]?.id);
+      setLoggedInUserEmail(loggedInUser[0]?.email);
       setFirstName(loggedInUser[0]?.firstName);
       setLastName(loggedInUser[0]?.lastName);
     } catch {
@@ -81,7 +86,8 @@ const Home = () => {
   useEffect(() => {
     // console.log(isAuthenticated);
     checkAuthentication();
-  }, [email]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [email, isAuthenticated]);
 
   const navBarData = userData.filter((item) => {
     if (item.id === userId) {
@@ -90,11 +96,26 @@ const Home = () => {
           {item.firstName} {item.lastName}
         </div>
       );
+    } else {
+      return null;
     }
   });
 
   if (!updatedAuthenticated) return <Landing />;
-  if (updatedAuthenticated && navBarData[0]?.firstName === "First Name" && navBarData[0]?.lastName === "Last Name") return <Profile userId={userId} getData={getData} setFirstName={setFirstName} setLastName={setLastName}/>;
+  if (
+    updatedAuthenticated &&
+    navBarData[0]?.firstName === "First Name" &&
+    navBarData[0]?.lastName === "Last Name"
+  )
+    return (
+      <Profile
+        userId={userId}
+        loggedInUserEmail={loggedInUserEmail}
+        getData={getData}
+        setFirstName={setFirstName}
+        setLastName={setLastName}
+      />
+    );
 
   return (
     <>

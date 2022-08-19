@@ -12,13 +12,13 @@ export const updatePost = (id, userId, axios, getData, postContent, setPostConte
     });
 };
 
-export const updateUserName = (userId, newFirstName, newLastName, setNewFirstName, setNewLastName, axios, getData) => {
+export const updateUserName = (userId, newFirstName, newLastName, setNewFirstName, setNewLastName, axios, loggedInUserEmail, getData) => {
   const updateNames = {
     firstName: newFirstName,
     lastName: newLastName,
     userId: userId,
     password: "test",
-    email: "tansu.soydan@hotmail.com",
+    email: loggedInUserEmail,
     photo_url: "test",
   };
   axios.put(`https://aidenshaw-blogpage.herokuapp.com/users/${userId}/`, updateNames).then((response) => {
@@ -44,7 +44,6 @@ export const createPost = (createContent, userId, axios, getData, setCreateConte
     content: createContent,
     user_id: userId,
   };
-  // console.log(data);
   axios
     .post(`https://aidenshaw-blogpage.herokuapp.com/users/${userId}/posts/`, data)
     .then((response) => {

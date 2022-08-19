@@ -3,7 +3,7 @@ import { toggleModal } from "../../shared/onClickFunctions";
 import { updateUserName } from "../../shared/actions";
 import axios from "axios";
 
-const Profile = ({ userId, getData }) => {
+const Profile = ({ userId, getData, loggedInUserEmail }) => {
   const [modal, setModal] = useState(true);
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
@@ -32,13 +32,7 @@ const Profile = ({ userId, getData }) => {
             <button
               onClick={() => {
                 updateUserName(
-                  userId,
-                  newFirstName,
-                  newLastName,
-                  setNewFirstName,
-                  setNewLastName,
-                  axios,
-                  getData
+                  userId, newFirstName, newLastName, setNewFirstName, setNewLastName, axios, loggedInUserEmail, getData
                 );
               }}
             >

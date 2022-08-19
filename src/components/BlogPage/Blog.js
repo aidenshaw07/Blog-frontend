@@ -12,10 +12,6 @@ const Blog = ({ firstName, lastName, post, axios, getData, userId }) => {
     document.body.classList.remove("active-modal");
   }
 
-  // if (firstName === "First Name" && lastName === "Last Name") {
-  //   return <input type="text" placeholder="Name and Last Name" />;
-  // }
-
   return (
     <div className="userdata">
       <div className="content">

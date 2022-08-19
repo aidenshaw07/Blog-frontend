@@ -8,7 +8,7 @@ import Blog from "./Blog";
 const BlogPage = ({ userData, getData, userId }) => {
   const renderData = userData.map((item) => {
     const postOrder = [...item.posts].sort((a, b) => {
-      return a.id - b.id;
+      return b.id - a.id;
     });
     // console.log(postOrder);
     return (
@@ -30,6 +30,7 @@ const BlogPage = ({ userData, getData, userId }) => {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

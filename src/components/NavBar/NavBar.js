@@ -23,6 +23,8 @@ const NavBar = ({ userId, getData, userData }) => {
           {item.firstName} {item.lastName}
         </div>
       );
+    } else {
+      return null;
     }
   });
 
@@ -30,16 +32,16 @@ const NavBar = ({ userId, getData, userData }) => {
     <div className="sidenav">
       <a href="http://localhost:3000/">Home</a>
       {/* <a href="">Profile</a> */}
-      <a href="#" onClick={() => toggleModal(modal, setModal)}>
+      <a href="#/" onClick={() => toggleModal(modal, setModal)}>
         Create Post
       </a>
-      <a href="#" onClick={logout}>
+      <a href="#/" onClick={logout}>
         Sign Out
       </a>
       <div className="navBarData">
-        <div >
+        {/* <div >
           <img className="navBarDataImage" src={navBarData[0]?.photo_url} alt="profile" />
-        </div>
+        </div> */}
         <div>
           {navBarData[0]?.firstName} {navBarData[0]?.lastName}
         </div>
