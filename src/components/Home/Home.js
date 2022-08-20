@@ -11,7 +11,7 @@ const Home = () => {
   const { user, isAuthenticated } = useAuth0();
   const [userId, setUserId] = useState("");
   const [loggedInUserEmail, setLoggedInUserEmail] = useState("");
-  console.log(loggedInUserEmail);
+  // console.log(loggedInUserEmail);
   const {
     given_name = "First Name",
     family_name = "Last Name",
@@ -30,9 +30,6 @@ const Home = () => {
     const data = await response.data;
     setUserData(data);
   };
-  console.log(userEmail);
-  console.log(firstName);
-  console.log(lastName);
   let updatedAuthenticated = isAuthenticated;
 
   const requestBody = {
@@ -67,7 +64,7 @@ const Home = () => {
           requestBody
         );
         const data = response.data;
-        console.log(data);
+        // console.log(data);
         // userData.push(data);
       }
       const loggedInUser = data.filter((user) => {
@@ -81,7 +78,6 @@ const Home = () => {
       console.log("error");
     }
   };
-  console.log(userData);
 
   useEffect(() => {
     // console.log(isAuthenticated);

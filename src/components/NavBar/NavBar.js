@@ -30,7 +30,7 @@ const NavBar = ({ userId, getData, userData }) => {
 
   return (
     <div className="sidenav">
-      <a href="http://localhost:3000/">Home</a>
+      <a href="https://aidenshaw-blogpagefrontend.herokuapp.com/">Home</a>
       {/* <a href="">Profile</a> */}
       <a href="#/" onClick={() => toggleModal(modal, setModal)}>
         Create Post
