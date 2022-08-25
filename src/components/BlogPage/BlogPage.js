@@ -1,12 +1,11 @@
-import React, { useEffect, Fragment } from "react";
-import axios from "axios";
+import React, { Fragment } from "react";
 import imageblog from "./blog2.avif";
 import "./blogPage.scss";
 
 import Blog from "./Blog";
 
-const BlogPage = ({ userData, getData, userId }) => {
-  const renderData = userData.map((item) => {
+const BlogPage = ({ allUsers, userId, getUserData }) => {
+  const renderData = allUsers.map((item) => {
     const postOrder = [...item.posts].sort((a, b) => {
       return b.id - a.id;
     });
@@ -20,24 +19,15 @@ const BlogPage = ({ userData, getData, userId }) => {
             userId={userId}
             firstName={item.firstName}
             lastName={item.lastName}
-            getData={getData}
-            axios={axios}
+            getUserData={getUserData}
           />
         ))}
       </Fragment>
     );
   });
 
-  useEffect(() => {
-    getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
-    <div
-      className="background"
-      style={{ backgroundImage: `url(${imageblog})` }}
-    >
+    <div className="background">
       <div className="cubes">
         <div className="cube"></div>
         <div className="cube"></div>
@@ -51,7 +41,6 @@ const BlogPage = ({ userData, getData, userId }) => {
         <div className="cube"></div>
       </div>
       <div className="data">{renderData}</div>
-
     </div>
   );
 };

@@ -1,13 +1,13 @@
 import React from "react";
 import LoginButton from "../Login/LoginButton";
 import "./landing.scss";
-import image from "./landing-bgpicture.avif";
+import image from "./landing.avif";
 
 const Landing = () => {
   return (
     <div style={{ backgroundImage: `url(${image})` }}>
       <div className="container">
-        <div className="quoc">
+        <div className="child-container">
           <div className="word">
             <h2>
               Click "THE BUTTON" If You Want To See What's on The Other Side!

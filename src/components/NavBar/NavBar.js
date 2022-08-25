@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
 import "./navBar.scss";
 import { useAuth0 } from "@auth0/auth0-react";
 import { createPost } from "../../shared/actions";
 import { toggleModal } from "../../shared/onClickFunctions";
 
-const NavBar = ({ userId, getData, userData }) => {
+const NavBar = ({ userId, allUsers, getUserData }) => {
   const { logout } = useAuth0();
   const [createContent, setCreateContent] = useState("");
   const [modal, setModal] = useState(false);
@@ -16,7 +15,7 @@ const NavBar = ({ userId, getData, userData }) => {
     document.body.classList.remove("active-modal");
   }
 
-  const navBarData = userData.filter((item) => {
+  const navBarData = allUsers.filter((item) => {
     if (item.id === userId) {
       return (
         <div className="userdata" key={item.id}>
@@ -30,7 +29,7 @@ const NavBar = ({ userId, getData, userData }) => {
 
   return (
     <div className="sidenav">
-      <a href="https://aidenshaw-blogpagefrontend.herokuapp.com/">Home</a>
+      <a href="http://localhost:3000/">Home</a>
       {/* <a href="">Profile</a> */}
       <a href="#/" onClick={() => toggleModal(modal, setModal)}>
         Create Post
@@ -53,22 +52,32 @@ const NavBar = ({ userId, getData, userData }) => {
             className="overlay"
           ></div>
           <div className="modal-content">
-            <input
-              className="create-post-input"
-              type="text"
-              placeholder="Type your post here"
-              value={createContent}
-              onChange={(e) => {
-                setCreateContent(e.target.value);
-              }}
-            />
-            <button
+            <section className="input-content">
+              <div className="input-content-wrap">
+                <dl className="inputbox">
+                  <dd className="inputbox-content">
+                    <input
+                      id="input0"
+                      type="text"
+                      value={createContent}
+                      onChange={(e) => {
+                        setCreateContent(e.target.value);
+                      }}
+                      required
+                    />
+                    <label for="input0">Type your text here</label>
+                    <span className="underline"></span>
+                  </dd>
+                </dl>
+              </div>
+            </section>
+            <button className="modal-action-button"
               onClick={() =>
                 createPost(
+                  getUserData,
+                  setModal,
                   createContent,
                   userId,
-                  axios,
-                  getData,
                   setCreateContent
                 )
               }
@@ -76,7 +85,7 @@ const NavBar = ({ userId, getData, userData }) => {
               Create Post
             </button>
             <button
-              className="close-modal"
+              className="modal-close-button"
               onClick={() => toggleModal(modal, setModal)}
             >
               CLOSE

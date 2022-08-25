@@ -16,6 +16,8 @@ body {
   color: white;
   font-weight: bold;
   // border: solid 5px pink;
+  width: 100%;
+  margin-left: 25rem;
   font-family: 'Shadows Into Light', cursive;
 }
 
@@ -38,7 +40,7 @@ body {
   // border: white solid 5px;
 }
 
-.quoc {
+.child-container {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

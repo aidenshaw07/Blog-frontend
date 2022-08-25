@@ -3,7 +3,7 @@ import "./blogPage.scss";
 import { deletePost, updatePost } from "../../shared/actions";
 import { toggleModal } from "../../shared/onClickFunctions";
 
-const Blog = ({ firstName, lastName, post, axios, getData, userId }) => {
+const Blog = ({ firstName, lastName, post, userId, getUserData }) => {
   const [postContent, setPostContent] = useState("");
   const [modal, setModal] = useState(false);
   if (modal) {
@@ -30,7 +30,7 @@ const Blog = ({ firstName, lastName, post, axios, getData, userId }) => {
           <button
             hidden={userId === post.user ? false : true}
             className="action-button"
-            onClick={() => deletePost(post.id, axios, getData)}
+            onClick={() => deletePost(getUserData, post.id)}
           >
             DeletePost
           </button>
@@ -43,31 +43,34 @@ const Blog = ({ firstName, lastName, post, axios, getData, userId }) => {
             className="overlay"
           ></div>
           <div className="modal-content">
-            <input
-              className="create-post-input"
-              type="text"
-              placeholder="Type your post here"
-              value={postContent}
-              onChange={(e) => {
-                setPostContent(e.target.value);
-              }}
-            />
-            <button
+          <section className="input-content">
+              <div className="input-content-wrap">
+                <dl className="inputbox">
+                  <dd className="inputbox-content">
+                    <input
+                      id="input0"
+                      type="text"
+                      value={postContent}
+                      onChange={(e) => {
+                        setPostContent(e.target.value);
+                      }}
+                      required
+                    />
+                    <label for="input0">Type your text here</label>
+                    <span className="underline"></span>
+                  </dd>
+                </dl>
+              </div>
+            </section>
+            <button className="modal-action-button"
               onClick={() =>
-                updatePost(
-                  post.id,
-                  userId,
-                  axios,
-                  getData,
-                  postContent,
-                  setPostContent
-                )
+                updatePost(getUserData, setModal, post.id, userId, postContent, setPostContent)
               }
             >
               Update Post
             </button>
             <button
-              className="close-modal"
+              className="modal-close-button"
               onClick={() => toggleModal(modal, setModal)}
             >
               CLOSE

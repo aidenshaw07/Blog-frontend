@@ -1,53 +1,41 @@
-export const updatePost = (id, userId, axios, getData, postContent, setPostContent) => {
+import axios from "axios";
+
+export const updatePost = (getUserData, setModal, id, userId, postContent, setPostContent) => {
   const updateData = {
     content: postContent,
     user_id: userId,
   };
+  axios.put(
+    `https://aidenshaw-blogpage.herokuapp.com/users/${userId}/posts/${id}/`,
+    updateData
+  );
+  setPostContent("");
+  getUserData();
+  setModal(false);
+};
+
+export const deletePost = (getUserData, id) => {
   axios
-    .put(`https://aidenshaw-blogpage.herokuapp.com/users/${userId}/posts/${id}/`, updateData)
+    .delete(`https://aidenshaw-blogpage.herokuapp.com/posts/${id}/`)
     .then((response) => {
-      getData();
-      setPostContent("");
       // console.log(response.data);
+      getUserData();
     });
 };
 
-export const updateUserName = (userId, newFirstName, newLastName, setNewFirstName, setNewLastName, axios, loggedInUserEmail, getData) => {
-  const updateNames = {
-    firstName: newFirstName,
-    lastName: newLastName,
-    userId: userId,
-    password: "test",
-    email: loggedInUserEmail,
-    photo_url: "test",
-  };
-  axios.put(`https://aidenshaw-blogpage.herokuapp.com/users/${userId}/`, updateNames).then((response) => {
-    getData();
-    setNewFirstName("");
-    setNewLastName("");
-    console.log(response.data);
-  }).catch((error) => {
-    console.log(error.request);
-  })
-}
-
-
-export const deletePost = (id, axios, getData) => {
-  axios.delete(`https://aidenshaw-blogpage.herokuapp.com/posts/${id}/`).then((response) => {
-    getData();
-    // console.log(response.data);
-  });
-};
-
-export const createPost = (createContent, userId, axios, getData, setCreateContent) => {
+export const createPost = (getUserData, setModal, createContent, userId, setCreateContent) => {
   const data = {
     content: createContent,
     user_id: userId,
   };
   axios
-    .post(`https://aidenshaw-blogpage.herokuapp.com/users/${userId}/posts/`, data)
+    .post(
+      `https://aidenshaw-blogpage.herokuapp.com/users/${userId}/posts/`,
+      data
+    )
     .then((response) => {
-      getData();
+      getUserData();
+      setModal(false);
       setCreateContent("");
       // console.log(response.data);
     })
@@ -56,9 +44,42 @@ export const createPost = (createContent, userId, axios, getData, setCreateConte
     });
 };
 
-// const deleteUser = (id) => {
-//   axios.delete(`http://localhost:8000/users/${id}/`).then((response) => {
-//     getData();
+  // export const updateUserName = (
+  //   getUserData,
+  //   userId,
+  //   newFirstName,
+  //   newLastName,
+  //   setNewFirstName,
+  //   setNewLastName,
+  //   loggedInUserEmail
+  // ) => {
+  //   const updateNames = {
+  //     firstName: newFirstName,
+  //     lastName: newLastName,
+  //     userId: userId,
+  //     password: "test",
+  //     email: loggedInUserEmail,
+  //     photo_url: "test",
+  //   };
+  //   axios
+  //     .put(
+  //       `https://aidenshaw-blogpage.herokuapp.com/users/${userId}/`,
+  //       updateNames
+  //     )
+  //     .then((response) => {
+  //       setNewFirstName("");
+  //       setNewLastName("");
+  //       getUserData();
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.request);
+  //     });
+  // };
+
+// const deleteUser = (getUserData, id) => {
+// .delete(`http://localhost:8000/users/${id}/`).then((response) => {
+//     getUserData();
 //     console.log(response.data);
 //   });
 // };
