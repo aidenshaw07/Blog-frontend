@@ -77,8 +77,8 @@ export const createPost = (getUserData, setModal, createContent, userId, setCrea
   //     });
   // };
 
-// const deleteUser = (getUserData, id) => {
-// .delete(`http://localhost:8000/users/${id}/`).then((response) => {
+// export const deleteUser = (getUserData, userId) => {
+// axios.delete(`https://aidenshaw-blogpage.herokuapp.com/users/${userId}/`).then((response) => {
 //     getUserData();
 //     console.log(response.data);
 //   });

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { deleteUser } from "../../shared/actions";
 import axios from "axios";
 import "./home.scss";
 import BlogPage from "../BlogPage/BlogPage";
@@ -56,9 +57,23 @@ const Home = () => {
 
   const userId = userID?.[0]?.id;
 
+
+
   useEffect(() => {
     getUserData();
   }, [isCreated]);
+
+
+    // const renderUsers = allUsers.map((user) => {
+    //   return (
+    //     <div>
+    //       <h1>{user.firstName}</h1>
+    //       <h1>{user.lastName}</h1>
+    //       <h1>{user.email}</h1>
+    //       <button onClick={deleteUser}>Delete User</button>
+    //     </div>
+    //   );
+    // });
 
   const navBarData = allUsers.filter((item) => {
     if (item.id === userId) {
@@ -90,6 +105,7 @@ const Home = () => {
     <div className="app">
       <NavBar userId={userId} allUsers={allUsers} getUserData={getUserData} />
       <BlogPage userId={userId} allUsers={allUsers} getUserData={getUserData} />
+      {/* {renderUsers} */}
     </div>
   );
 };

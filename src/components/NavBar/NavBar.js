@@ -29,17 +29,17 @@ const NavBar = ({ userId, allUsers, getUserData }) => {
 
   return (
     <div className="sidenav">
-      <a href="http://localhost:3000/">Home</a>
+      <a href="https://aidenshaw-blogpagefrontend.herokuapp.com/">Home</a>
       {/* <a href="">Profile</a> */}
       <a href="#/" onClick={() => toggleModal(modal, setModal)}>
         Create Post
       </a>
-      <a href="#/" onClick={logout}>
+      <a href="https://aidenshaw-blogpagefrontend.herokuapp.com/" onClick={logout}>
         Sign Out
       </a>
       <div className="navBarData">
         {/* <div >
-          <img className="navBarDataImage" src={navBarData[0]?.photo_url} alt="profile" />
+          <img className="navBarDataImage" src={navBarData?.photo_url} alt="profile" />
         </div> */}
         <div>
           {navBarData[0]?.firstName} {navBarData[0]?.lastName}

@@ -2,8 +2,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap");
 
 body {
+  background-image: url(./landing.avif);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
   position: absolute;
   margin: auto;
   height: 100%;
@@ -15,7 +16,6 @@ body {
   font-size: 2rem;
   color: white;
   font-weight: bold;
-  // border: solid 5px pink;
   width: 100%;
   margin-left: 25rem;
   font-family: 'Shadows Into Light', cursive;
@@ -47,5 +47,4 @@ body {
   height: 30rem;
   width: 40rem;
   margin-right: 15rem;
-  // border: red solid 5px;
 }

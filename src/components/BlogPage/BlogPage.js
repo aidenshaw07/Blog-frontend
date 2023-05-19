@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import imageblog from "./blog2.avif";
 import "./blogPage.scss";
 
 import Blog from "./Blog";
@@ -7,7 +6,7 @@ import Blog from "./Blog";
 const BlogPage = ({ allUsers, userId, getUserData }) => {
   const renderData = allUsers.map((item) => {
     const postOrder = [...item.posts].sort((a, b) => {
-      return b.id - a.id;
+      return a.id - b.id;
     });
     // console.log(postOrder);
     return (

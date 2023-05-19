@@ -1,11 +1,10 @@
 import React from "react";
 import LoginButton from "../Login/LoginButton";
 import "./landing.scss";
-import image from "./landing.avif";
 
 const Landing = () => {
   return (
-    <div style={{ backgroundImage: `url(${image})` }}>
+    <div>
       <div className="container">
         <div className="child-container">
           <div className="word">
